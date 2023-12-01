@@ -1,53 +1,63 @@
-async function api(){
-    try{
-        data= fetch("https://restcountries.com/v3.v1/all")
-        out = await data;
-        prom = out.json();
-        final = await prom;
-        parent = document.querySelector('.container')
-        parent1 = document.querySelector(`.row`)
-        final.forEach(element = > {
+const url="https://restcountries.com/v3.1/all";
+fetch (url)
+.then((data)=> data.json())
+.then((countries1)=>{
+  const countries1 = document.getElementById("countries-container");
 
-          parent1.innerHtml +=`
-          <div class ="card h-100">
-          <div id = "cardDetails" clas"col-xl-4 col-lg-4 col-md-4 col-sm-6">
-          <div class="card-header">
-          <h5 class="card-title">${element.name.common}</h5>
-          <div class="card-body">
-          <img src="${element.flags.png}" class="card-img-top" alt="...">
-          <div class = "card-text">
-          <ul class="list-group">
-          <li class="list-group-item card-text"><b>Capital:${element.capital}</li>
-          <li class="list-group-item card-text"><b>Region:${element.region}</li>
-          <li class="list-group-item card-text"><b>Country Code:${element.latlng}</li>
-          <li class="list-group-item card-text"><b>Country Code:${element.cca2}</li>
-          </div>
-           <button class = "btn btn-primary"target="_blank" value="${element.name.common}">Click Here for Weather</button>
-          </div>
-          </div>` 
-          parent.append(parent1) 
+  for(let i=0;i <countries.length;i++){
+    const country = countries1[i];
+    const countryDiv = document.createElement("div");
+    countryDiv.classList.add(
+      "country-card","col-sm-6","col-md-4","col-lg-4","col-xl-4"
+    
+    );
+    const nativeName = country.name &&country.name.nativeName && country.name.nativeName.eng
+    ? country.name.nativeName.eng.common || "N/A" : "N/A";
 
-          let btn = document.querySelectorAll(".btn");
-          btn.forEach((ele)=>{
-            let value = ele.value
-            console.log(value)
-            async function weather(){
-                let res = fetch(`https://api.openweathermap.org/data/2.5/weather?q=${restCountryName}&appid=${apiKey`)
-                let ress =await res
-                let res11 = ress.json()
-                let res1 = await res11
+countryDiv.innerHTML = `
+<div class= "card h-100">
+<div class = "card-header">
+<h5 class = "card-title">${country.name.common}</h5>
+</div>
+<div class = "card-body">
+<img src="${country.flags.svg}" class="card-img-top" alt="Flag">
 
-                console.log(res1)
-                ele.innerhtml = `weather${res1.weather[0].description}<br>Temp:${res1.main.temp}<br>lon:${res1.coord.lon}lat${res1.coord.lat}`
-           
-            }
+<div class="card-text">Region: ${country.region}</div>
+<div class="card-text">Capital: ${country.capital}</div>
+<div class="card-text">Countrycode: ${country.cca3}</div>
+<div class="card-text">Native Name: ${nativeName}</div>
+<div class="card-text">Population: ${country.population}</div>
 
-          })
-        })
-    });
+<button class = "btn btn-primary" onclick ="getWeatherData(${country.latlng[0]}, ${country.latlng[1]}, '${country.cca3}', '${country.name.common}')">
+Click Here for Weather
+</button>
+<div id ="weather-${country.cca3}" class="mt-3"></div>
+</div>
+</div>
+`;
+countriesContainer.appendChild(countryDiv);
 }
-catch(error){
-console.log(error)
+
+
+});
+
+function getWeatherData(latitude, longitude, countryCode){
+  const apikey = "8a02350c859d72fd590d6f4bb751370d";
+  const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apikey}`;
+fetch(weatherUrl)
+.then((data)=> data.json())
+.then((weather)=>{
+  const weatherContainer = document.getElementById(
+    `weather-${countryCode}`
+
+  );
+  if(weatherContainer){
+    weatherContainer.innerHTML=`
+    <p class ="card-text"><strong>Temperature:</strong>${weather.main.temp}°C</p>
+    <p class ="card-text"><strong>Weather:</strong>${weather.weather[0].description}</p>
+    `;
+  }
+});
+
 }
-}
-api()
+                                                                                      
