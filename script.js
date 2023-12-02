@@ -42,7 +42,7 @@ row.append(col);
       let latlng = card1[index].latlng;
       let lat = latlng[0];
       let lng = latlng[1];
-                                                  // 8a02350c859d72fd590d6f4bb751370d&units=metric
+                                                
       let weatherAPI = fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=429a23dee47c5972025ec631391cc139&units=metric`);
          weatherAPI
          .then((data)=> data.json())
