@@ -17,9 +17,9 @@ response
 .then((card1)=>{
   for(let i=0;i <card1.length;i++){
      const col = document.createElement("div");
-     col.classList ="col-sm-6","col-md-4","col-lg-4","col-xl-4";
+     col.classList ="col-sm-6 col-md-4 col-lg-4 col-xl-4";
 col.innerHTML =`
-<div class= "card h-90">
+<div class= "card h-100">
 <div class="card-header">
 <h5 class = "card-title text-center">${card1[i].name.common}</h5>
 </div>
@@ -30,9 +30,11 @@ col.innerHTML =`
 <div class="card-text text-center">Region: ${card1[i].region}</div>
 <div class="card-text text-center">Capital: ${card1[i].capital}</div>
 <div class="card-text text-center">Countrycode: ${card1[i].cca3}</div>
+<div class="card-text text-center">Population: ${card1[i].population}</div>
 
-
-<button class = "btn btn-primary"> Click Here for Weather</button>
+<button class = "btn btn-primary" Onclick = "getWeatherData('${card1[i].name.common}',${i})"> Click Here for Weather</button>
+<p class ="weatherInfo-${i}"></p>
+<div class="some-class"></div>
 </div>
 </div>`;
 row.append(col);
@@ -48,10 +50,7 @@ row.append(col);
          weatherAPI
          .then((data)=> data.json())
          .then((value)=>         
-alert( `Weather of ${card1[index].name.common}= ${Math.floor(
-  value.main.temp
-)}°C`
-)         
+alert( `Weather of ${card1[index].name.common}= ${Math.floor(value.main.temp)}°C`)         
          );
 
     });
