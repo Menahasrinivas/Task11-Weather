@@ -19,21 +19,22 @@ response
      const col = document.createElement("div");
      col.classList ="col-sm-6","col-md-4","col-lg-4","col-xl-4";
 col.innerHTML =`
-<div class= "card h-100">
+<div class= "card h-90">
+<div class="card-header">
 <h5 class = "card-title text-center">${card1[i].name.common}</h5>
 </div>
 <div class = "img-box">
 <img src="${card1[i].flags.png}" class="card-img-top" alt="..."/>
 </div>
 <div class = "card-body">
-<div class="card-text">Region: ${card1[i].region}</div>
-<div class="card-text">Capital: ${card1[i].capital}</div>
-<div class="card-text">Countrycode: ${card1[i].cca3}</div>
+<div class="card-text text-center">Region: ${card1[i].region}</div>
+<div class="card-text text-center">Capital: ${card1[i].capital}</div>
+<div class="card-text text-center">Countrycode: ${card1[i].cca3}</div>
 
 
 <button class = "btn btn-primary"> Click Here for Weather</button>
 </div>
-<div>`;
+</div>`;
 row.append(col);
   }
   let btns = document.querySelectorAll("button");
